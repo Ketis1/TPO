@@ -20,6 +20,9 @@ public class Main {
             EsLanguageServer.main(args);
         });
 
+        Thread threadClientGui = new Thread(() -> {
+            ClientGui.main(args);
+        });
         Thread threadClient = new Thread(() -> {
             Client.main(args);
         });
@@ -29,5 +32,6 @@ public class Main {
         threadEn.start();
         threadEs.start();
         threadClient.start();
+        threadClientGui.start();
     }
 }
