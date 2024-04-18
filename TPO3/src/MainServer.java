@@ -87,12 +87,12 @@ class ClientHandler implements Runnable {
 
 
 
-            // Odczytanie odpowiedzi od serwera pomocniczego
-            String result = serverIn.readLine();
-            System.out.println("Odpowiedź od serwera pomocniczego: " + result);
-
-            // Przekazanie odpowiedzi do klienta
-            out.println(result);
+//            // Odczytanie odpowiedzi od serwera pomocniczego
+//            String result = serverIn.readLine();
+//            System.out.println("Odpowiedź od serwera pomocniczego: " + result);
+//
+//            // Przekazanie odpowiedzi do klienta
+//            out.println(result);
 
             // Zamknięcie połączenia
             serverSocket.close();

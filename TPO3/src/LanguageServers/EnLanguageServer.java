@@ -6,17 +6,19 @@ import java.util.Map;
 
 public class EnLanguageServer {
     protected static Map<String,String> translations;
+    String gowno = "["+thisServerLanguageCode +"LanguageServer]";
+    final static String thisServerLanguageCode ="En";
     public static void main(String[] args) {
         loadTranslations();
         try {
             int port = 1500; // port serwera
             ServerSocket serverSocket = new ServerSocket(port);
-            System.out.println("EnLanguageServer nasłuchuje na porcie " + port + "...");
+            System.out.println(thisServerLanguageCode +"LanguageServer nasłuchuje na porcie " + port + "...");
 
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Nowe połączenie: " + clientSocket);
-                new Thread(new ClientHandler(clientSocket)).start();
+                new Thread(new EnClientHandler(clientSocket)).start();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -24,7 +26,7 @@ public class EnLanguageServer {
     }
     private static void loadTranslations(){
         translations = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("src/dicts/en_translations.properties"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/dicts/"+ thisServerLanguageCode +"_translations.properties"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 // Sprawdzamy, czy linia nie jest pusta i czy zawiera znak równości
@@ -42,10 +44,10 @@ public class EnLanguageServer {
 
 
 }
-class ClientHandler implements Runnable {
+class EnClientHandler implements Runnable {
     private Socket clientSocket;
 
-    public ClientHandler(Socket socket) {
+    public EnClientHandler(Socket socket) {
         this.clientSocket = socket;
     }
 
@@ -56,7 +58,7 @@ class ClientHandler implements Runnable {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
 
             String request = in.readLine(); // odczytanie zapytania od serwera głównego
-            System.out.println("Otrzymano zapytanie: " + request);
+            System.out.println("["+ EnLanguageServer.thisServerLanguageCode +"LanguageServer]"+"Otrzymano zapytanie: " + request);
 
             // Parsowanie zapytania
             String[] parts = request.split(",");
