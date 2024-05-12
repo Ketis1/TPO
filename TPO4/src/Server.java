@@ -16,7 +16,8 @@ public class Server {
     private Map<SocketChannel, Set<String>> subscriptions = new HashMap<>();
     private Map<String, Set<SocketChannel>> topicSubscribers = new HashMap<>();
     private Charset charset = Charset.forName("ISO-8859-2");
-    private SocketChannel adminChannel; // Kanał administracyjny
+    private SocketChannel adminChannel;
+    private String adminPassword = "password";
 
     public Server() {
         try {
@@ -129,7 +130,7 @@ public class Server {
     }
 
     private void authenticateAdmin(SocketChannel clientChannel, String password) throws IOException {
-        if (password.equals("admin_password")) { // Replace "admin_password" with your actual admin password
+        if (password.equals(adminPassword)) {
             adminChannel = clientChannel;
             System.out.println("Admin authenticated from: " + adminChannel.getRemoteAddress());
             adminChannel.write(charset.encode("You are now authenticated as admin.\n"));
